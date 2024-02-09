@@ -1,44 +1,39 @@
 import React, { useEffect } from 'react'
 import { Product } from './product'
 
-export default function ProductList() {
-  const [products, setProducts] = React.useState(Array<Product>);
+type ProductListProps = {
+  title: string;
+  products: Array<Product>;
+}
 
+export default function ProductList(props:ProductListProps) {
+  const { title, products } = props;
   /* I would make this a utility that takes into account the currency, localization etc. */
   const formatPrice = (price: number) => {
     if(price === 0) return 'Free';
     return `$${price / 100}`
   }
 
-  // just testing something
-  useEffect(() => {
-    fetch('http://localhost:3000/product')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-  }, [])
-
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map(product => (
-        <div key={product.id} className="bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
-        <img
-          src={product.image}
-          alt="product"
-          className=""
-        />
-        <div className="p-4">
-          <h1 className="text-neutral-100 font-bold text-2xl">{product.name}</h1>
-          <p className="mt-2 text-neutral-400">{product.description}</p>
-          <div className="flex item-center justify-between mt-3">
-            <h1 className="text-neutral-300 font-bold">{formatPrice(product.price)}</h1>
-            <button className="px-3 py-1 bg-neutral-100 text-xs font-bold uppercase rounded">
-              Add to Cart
-            </button>
-          </div>
+    <>
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-screen-2xl lg:px-8">
+        <h2 className="text-white py-3 font-bold text-lg">{title}</h2>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-8 xl:gap-x-4">
+          {products.map((product) => (
+            <a key={product.id} href={product.image} className="group">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-full w-full object-cover object-center group-hover:opacity-90 xl:max-h-[220px]"
+                />
+              </div>
+              <h3 className="mt-4 text-sm text-gray-300">{product.name}</h3>
+              <p className="mt-1 text-lg font-medium text-gray-100">{formatPrice(product.price)}</p>
+            </a>
+          ))}
         </div>
       </div>
-      ))}
-      </div>
-      
+    </>
   )
 }
