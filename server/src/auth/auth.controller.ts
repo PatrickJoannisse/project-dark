@@ -31,7 +31,6 @@ export class AuthController {
     return this.authService.signUp(signUpDto.username, signUpDto.password);
   }
 
-  @Public()
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
