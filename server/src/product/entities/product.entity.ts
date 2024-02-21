@@ -1,11 +1,31 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity()
 export class Product {
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
+  
+  @Column()
   name: string;
+
+  @Column()
   description: string;
+
+  @Column()
   price: number;
+
+  @Column()
   stock: number;
+
+  @Column()
   image: string;
+
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
+
+  @Column('timestamp', { nullable: true })
   deletedAt: Date;
 }

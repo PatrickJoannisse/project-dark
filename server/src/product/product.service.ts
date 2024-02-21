@@ -3,11 +3,14 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Model } from 'mongoose';
 import { Product } from './entities/product.entity';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProductService {
-  constructor(@InjectModel(Product.name) private productModel: Model<Product>) {}
+  constructor(
+    @InjectRepository(Product)
+    private productModel: Model<Product>,
+  ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const createdProduct = new this.productModel(createProductDto);

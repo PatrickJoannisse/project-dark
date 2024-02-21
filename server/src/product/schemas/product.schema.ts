@@ -1,12 +1,39 @@
-import * as mongoose from 'mongoose';
+import { EntitySchema } from 'typeorm';
+import { Product } from '../entities/product.entity';
 
-export const ProductSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  price: Number,
-  stock: Number,
-  image: String,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-  deletedAt: { type: Date, default: null },
+export const ProductSchema = new EntitySchema<Product>({
+  name: 'Product',
+  columns: {
+    id: {
+      primary: true,
+      type: Number,
+      generated: true,
+    },
+    name: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+    stock: {
+      type: Number,
+    },
+    image: {
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      createDate: true,
+    },
+    updatedAt: {
+      type: Date,
+      updateDate: true,
+    },
+    deletedAt: {
+      type: Date,
+    },
+  },
 });
