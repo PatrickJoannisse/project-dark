@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Product } from './product'
 
 type ProductListProps = {
@@ -19,7 +20,7 @@ export default function ProductList(props:ProductListProps) {
         <h2 className="text-white py-3 font-bold text-lg">{title}</h2>
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-8 xl:gap-x-4">
           {products.map((product) => (
-            <a key={product._id} href={product.image} className="group">
+            <Link to="/product/$productId" params={{productId:product.id}} key={product.id} className="group">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                 <img
                   src={product.image}
@@ -29,7 +30,7 @@ export default function ProductList(props:ProductListProps) {
               </div>
               <h3 className="mt-4 text-sm text-gray-300">{product.name}</h3>
               <p className="mt-1 text-lg font-medium text-gray-100">{formatPrice(product.price)}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

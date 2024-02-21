@@ -25,9 +25,12 @@ export class ProductController {
     return this.productService.findAll();
   }
 
+  @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const test = await this.productService.findOne(+id)
+    console.log(test)
+    return await this.productService.findOne(+id);
   }
 
   @Patch(':id')

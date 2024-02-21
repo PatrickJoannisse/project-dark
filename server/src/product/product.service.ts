@@ -21,9 +21,9 @@ export class ProductService {
   async findAll(): Promise<Product[]> {
     return this.productRepository.find()
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  
+  async findOne(id: number) {
+    return await this.productRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

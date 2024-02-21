@@ -1,8 +1,12 @@
-import ProductList from "./products/ProductList";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import ProductList from '../products/ProductList';
 
-export default function App() {
-  const queryClient = useQueryClient()
+export const Route = createLazyFileRoute('/')({
+  component: Index,
+})
+
+function Index() {
   const query = useQuery({ queryKey: [], queryFn: () => fetch('http://localhost:3000/product').then(res => res.json()) })
 
   return (
