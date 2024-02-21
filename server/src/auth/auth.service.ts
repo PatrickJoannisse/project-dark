@@ -1,21 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { AuthPayloadDto } from './dto/auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-
-const fakeUsers = [
-  { username: 'user1', password: 'password' },
-  { username: 'user2', password: 'password' },
-];
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService
+  ) {}
 
-  constructor(private jwtService: JwtService) {}
-
-  validateUser(authPayload:AuthPayloadDto) {
-    const { username, password } = authPayload;
+  async signIn(
+    username: string,
+    pass: string,
+  ): Promise<{ access_token: string }> {
+    const user = await this.usersService.findOne(username);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    const test = await bcrypt.compare(pass, user.password)
+    if (test) {
+      const payload = { sub: user.userId, username: user.username };
+      return {
+        access_token: await this.jwtService.signAsync(payload),
+      };
+    }
     
-    const findUser = fakeUsers.find(user => user.username === username && user.password === password);
-    return findUser ? this.jwtService.sign({ username: findUser.username }) : null;
+  }
+
+  async signUp(username:string, password:string) {
+    const hash = await bcrypt.hash(password, 10);
+    return this.usersService.create({username, password:hash});
   }
 }

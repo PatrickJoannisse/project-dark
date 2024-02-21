@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('product')
 export class ProductController {
@@ -12,8 +13,15 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
+  @Public()
   @Get()
   findAll() {
+    // delay for 5 seconds
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve(this.productService.findAll());
+    //   }, 5000);
+    // });
     return this.productService.findAll();
   }
 
