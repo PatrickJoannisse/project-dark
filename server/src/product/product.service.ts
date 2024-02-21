@@ -4,21 +4,22 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Model } from 'mongoose';
 import { Product } from './entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private productModel: Model<Product>,
+    private productRepository: Repository<Product>
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const createdProduct = new this.productModel(createProductDto);
-    return createdProduct.save();
+    const createdProduct = this.productRepository.create(createProductDto);
+    return this.productRepository.save(createdProduct);
   }
 
   async findAll(): Promise<Product[]> {
-    return this.productModel.find().exec();
+    return this.productRepository.find()
   }
 
   findOne(id: number) {
