@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import ProductList from '../products/ProductList';
+import ProductList from '../features/products/ProductList';
 import { useAuth } from '../contexts/auth';
 
 export const Route = createLazyFileRoute('/')({
@@ -8,7 +8,7 @@ export const Route = createLazyFileRoute('/')({
 })
 
 function Index() {
-  const query = useQuery({ queryKey: [], queryFn: () => fetch('http://localhost:3000/product').then(res => res.json()) })
+  const query = useQuery({ queryKey: [], queryFn: () => fetch('/api/product').then(res => res.json()) })
   const auth = useAuth();
   return (
     <>
