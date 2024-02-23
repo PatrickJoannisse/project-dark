@@ -6,8 +6,8 @@ export class User {
     id: number;
 
     @Column()
-    @Unique(['username'])
-    username: string;
+    @Unique(['email'])
+    email: string;
 
     @Column()
     password: string;

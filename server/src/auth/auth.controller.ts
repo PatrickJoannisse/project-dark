@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
-import { sign } from 'crypto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +19,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+    return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -28,7 +27,7 @@ export class AuthController {
   @Post('register')
   async signUp(@Body() signUpDto: Record<string, any>) {
     // validation here
-    return this.authService.signUp(signUpDto.username, signUpDto.password);
+    return this.authService.signUp(signUpDto.email, signUpDto.password);
   }
 
   @Get('profile')

@@ -9,7 +9,7 @@ export const UserSchema = new EntitySchema<User>({
       type: Number,
       generated: true,
     },
-    username: {
+    email: {
       type: String,
     },
     password: {
