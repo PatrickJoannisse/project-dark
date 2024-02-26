@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
-import { Link, createLazyFileRoute } from "@tanstack/react-router"
+import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router"
 import axios from "axios"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { tv } from "tailwind-variants"
+import { useAuth } from "../contexts/auth"
 
 export const Route = createLazyFileRoute('/login')({
   component: Login,
@@ -22,6 +23,8 @@ function Login() {
     setValue,
     formState: { errors },
   } = useForm<Inputs>()
+  const navigate = useNavigate();
+  const { setUser} = useAuth();
 
   const inputVariants = tv({
     base: "block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" ,
@@ -38,7 +41,6 @@ function Login() {
 
   const loginMutation = useMutation({ 
     mutationFn: (credentials:any) => {
-      console.log(credentials)
       return axios.post('/api/auth/login', credentials)
     },
   })
@@ -48,7 +50,17 @@ function Login() {
   const onSubmit: SubmitHandler<Inputs> = async (input) => {
     loginMutation.mutate(input, {
       onSuccess: (data) => {
-        console.log('success')
+        // create cookie with data.data.access_token
+        document.cookie = `ttrpg-store=${data.data.access_token}; path=/; max-age=3600; samesite=strict; secure`;
+        // set user
+        setUser({
+          id: "1",
+          email: input.email
+        });
+        // redirect to private
+        navigate({
+          to: '/private'
+        });
       },
       onError: () => {
         setValue('password', '');

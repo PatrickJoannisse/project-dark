@@ -7,6 +7,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 dotenv.config();
 
 @Module({
@@ -20,6 +21,7 @@ dotenv.config();
   ],
   providers: [
     AuthService,
+    UsersService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
