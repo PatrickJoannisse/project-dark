@@ -8,14 +8,15 @@ export const Route = createFileRoute('/product/$productId')({
 })
 
 async function fetchProduct(productId: string) {
-  const res = await fetch(`http://localhost:3000/product/${productId}`)
+  const res = await fetch(`http://localhost:3000/v1/product/${productId}`)
   return res.json()
 }
 
 function Product() {
   const data = Route.useLoaderData();
   return (
-    <div className="text-white p-2">
+    <div className="p-2">
+      <img src={data.image} alt={data.name} className='aspect-auto w-44' />
       <h1>{data.name}</h1>
       <p>{data.description}</p>
     </div>

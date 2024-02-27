@@ -4,7 +4,10 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 
-@Controller('product')
+@Controller({
+  version: '1',
+  path: 'product',
+})
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -28,8 +31,6 @@ export class ProductController {
   @Public()
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const test = await this.productService.findOne(+id)
-    console.log(test)
     return await this.productService.findOne(+id);
   }
 
