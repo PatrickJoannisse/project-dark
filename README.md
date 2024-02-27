@@ -7,3 +7,6 @@ The intent of this project is to learn NestJS and create something with it. The 
 
 ### Single Repo
 I'm using a single repo here because I'm the only one working on it and I don't mind coupling the front-end and backend but if this would be bigger I'd totally have the front and the back in seperate repos. This way you can have different teams working on different parts of the project and you can have different release cycles for the front and the back.
+
+### Throttling using `@nestjs/throttler`
+I've set the limit to 2 per second but this might change. By default, the package uses in memory cache but there's a way to use Redis. If I ever need to scale this I'll probably use Redis.

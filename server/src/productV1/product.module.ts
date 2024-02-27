@@ -15,4 +15,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ProductService
   ],
 })
-export class ProductModule {}
+export class ProductModuleV1 {}

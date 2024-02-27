@@ -8,6 +8,7 @@ import { AuthGuard } from './auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { ThrottlerGuard } from '@nestjs/throttler';
 dotenv.config();
 
 @Module({
@@ -24,7 +25,11 @@ dotenv.config();
     UsersService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      useClass: AuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
     },
   ],
   controllers: [AuthController],

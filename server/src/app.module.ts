@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './productV1/product.module';
+import { ProductModuleV1 } from './productV1/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule, seconds } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([{
+      ttl: seconds(1),
+      limit: 2,
+    }]),
     ConfigModule.forRoot({isGlobal: true,}),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -22,7 +27,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       ],
       synchronize: true,
     }),
-    ProductModule,
+    ProductModuleV1,
     AuthModule,
     UsersModule],
   controllers: [AppController],
