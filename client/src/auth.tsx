@@ -36,11 +36,15 @@ export function useAuth() {
   return context
 }
 
-export async function isAuthenticated(context: any, location: any) {
+export async function isGuarded(context: any, location: any) {
   const token = document.cookie;
-
+  
   if (!token) {
     redirectToLogin(location);
+  }
+
+  if(context.auth.isAuthenticated) {
+    return;
   }
 
   try {
@@ -56,6 +60,17 @@ export async function isAuthenticated(context: any, location: any) {
     context.auth.setUser({ id, email } as User);
   } catch (error) {
     redirectToLogin(location);
+  }
+}
+
+export function isGuest(context: any) {
+  const token = document.cookie;
+  if (!context.auth.isAuthenticated && !token) {
+    return;
+  } else {
+    throw redirect({
+      to: '/private',
+    });
   }
 }
 

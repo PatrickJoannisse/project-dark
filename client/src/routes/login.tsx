@@ -1,11 +1,14 @@
 import { useMutation } from "@tanstack/react-query"
-import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router"
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router"
 import axios from "axios"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { tv } from "tailwind-variants"
-import { useAuth } from "../contexts/auth"
+import { isGuest, useAuth } from "../auth"
 
-export const Route = createLazyFileRoute('/login')({
+export const Route = createFileRoute('/login')({
+  beforeLoad: async ({context}) => {
+    isGuest(context);
+  },
   component: Login,
 })
 

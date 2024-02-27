@@ -1,9 +1,9 @@
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
-import { isAuthenticated, useAuth } from '../contexts/auth';
+import { isGuarded, useAuth } from '../auth';
 
 export const Route = createFileRoute('/private')({
   beforeLoad: async ({ context, location }) => {
-    await isAuthenticated(context, location);
+    await isGuarded(context, location);
   },
   component: Private,
 })

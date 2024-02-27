@@ -8,7 +8,7 @@ const queryClient = new QueryClient()
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
-import { AuthProvider, useAuth } from './contexts/auth'
+import { AuthProvider, useAuth } from './auth'
 // Create a new router instance
 const router = createRouter({ 
   routeTree,
