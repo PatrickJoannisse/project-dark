@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsModuleV1 } from './v1/products/products.module';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, seconds } from '@nestjs/throttler';
+
+// Modules
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { ProductsModuleV1 } from './v1/products/products.module';
 import { LocationsModule } from './v1/locations/locations.module';
+import { CommandersModule } from './v1/commanders/commanders.module';
+import { CommandersService } from './v1/commanders/commanders.service';
+import { Commander } from './v1/commanders/entities/commander.entity';
 
 @Module({
   imports: [
@@ -28,13 +33,16 @@ import { LocationsModule } from './v1/locations/locations.module';
       ],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Commander]),
     ProductsModuleV1,
     AuthModule,
     UsersModule,
-    LocationsModule],
+    LocationsModule,
+    CommandersModule],
   controllers: [AppController],
   providers: [
     AppService,
+    CommandersService
   ],
 })
 export class AppModule {}
