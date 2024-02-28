@@ -8,7 +8,7 @@ export const Route = createFileRoute('/product/$productId')({
 })
 
 async function fetchProduct(productId: string) {
-  const res = await fetch(`http://localhost:3000/v1/product/${productId}`)
+  const res = await fetch(`/api/v1/products/${productId}`)
   return res.json()
 }
 

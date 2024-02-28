@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModuleV1 } from './v1/product/product.module';
+import { ProductsModuleV1 } from './v1/products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, seconds } from '@nestjs/throttler';
+import { LocationsModule } from './v1/locations/locations.module';
 
 @Module({
   imports: [
@@ -27,9 +28,10 @@ import { ThrottlerModule, seconds } from '@nestjs/throttler';
       ],
       synchronize: true,
     }),
-    ProductModuleV1,
+    ProductsModuleV1,
     AuthModule,
-    UsersModule],
+    UsersModule,
+    LocationsModule],
   controllers: [AppController],
   providers: [
     AppService,

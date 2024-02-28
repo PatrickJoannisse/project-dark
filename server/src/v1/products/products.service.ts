@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class ProductService {
+export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>

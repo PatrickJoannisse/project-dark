@@ -1,8 +1,8 @@
 import { EntitySchema } from 'typeorm';
-import { Product } from '../entities/product.entity';
+import { Location } from '../entities/location.entity';
 
-export const ProductSchema = new EntitySchema<Product>({
-  name: 'Product',
+export const LocationSchema = new EntitySchema<Location>({
+  name: 'Location',
   columns: {
     id: {
       primary: true,
@@ -15,24 +15,17 @@ export const ProductSchema = new EntitySchema<Product>({
     description: {
       type: String,
     },
-    price: {
+    locationType: {
       type: Number,
     },
-    stock: {
-      type: Number,
-    },
-    image: {
-      type: String,
+    coordinates:{
+      type: 'point',
     },
     createdAt: {
       type: Date,
       createDate: true,
     },
-    updatedAt: {
-      type: Date,
-      updateDate: true,
-    },
-    deletedAt: {
+    expireAt: {
       type: Date,
     },
   },

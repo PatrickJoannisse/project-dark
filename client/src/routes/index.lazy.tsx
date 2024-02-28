@@ -7,7 +7,7 @@ export const Route = createLazyFileRoute('/')({
 })
 
 function Index() {
-  const query = useQuery({ queryKey: [], queryFn: () => fetch('/api/v1/product').then(res => res.json()) })
+  const query = useQuery({ queryKey: [], queryFn: () => fetch('/api/v1/products').then(res => res.json()) })
   return (
     <>
       <header className="py-16">
