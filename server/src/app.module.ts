@@ -31,7 +31,7 @@ import { Commander } from './v1/commanders/entities/commander.entity';
       entities: [
         __dirname + '/**/*.entity{.ts,.js}',
       ],
-      synchronize: true,
+      synchronize: false,
     }),
     TypeOrmModule.forFeature([Commander]),
     ProductsModuleV1,
