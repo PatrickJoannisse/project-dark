@@ -10,4 +10,7 @@ export class Commander {
 
   @Column() // make this a relationship to a table of factions later
   faction: string;
+
+  @Column({ type: "int" })
+  gold: number;
 }

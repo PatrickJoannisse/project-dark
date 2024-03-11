@@ -12,16 +12,16 @@ export class CommandersService {
     @InjectRepository(Commander)
     private commanderRepository: Repository<Commander>,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
-  async register(createCommanderDto: CreateCommanderDto): Promise<{ access_token: string }>{
+  async register(
+    createCommanderDto: CreateCommanderDto,
+  ): Promise<{ access_token: string }> {
     // check if callsign is taken
     const isTaken = await this.commanderRepository.findOne({ where: {callsign:createCommanderDto.callsign }});
-    if(isTaken) {
+    if (isTaken) {
       // throw a 403
-      throw new HttpErrorByCode[403](
-        'This callsign is already taken'
-      );
+      throw new HttpErrorByCode[403]('This callsign is already taken');
     } else {
       // create commander
       const commander = this.commanderRepository.create(createCommanderDto);
@@ -35,8 +35,7 @@ export class CommandersService {
   }
 
   async findOne(callsign: string): Promise<Commander> {
-    const commander = await this.commanderRepository.findOne({ where: {callsign} });
-    return commander;
+    return this.commanderRepository.findOne({ where: {callsign} });
   }
 
   // update(id: number, updateCommanderDto: UpdateCommanderDto) {
