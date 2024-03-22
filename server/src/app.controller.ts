@@ -1,14 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Public } from './auth/decorators/public.decorator';
-import { CreateCommanderDto } from './v1/commanders/dto/create-commander.dto';
-import { CommandersService } from './v1/commanders/commanders.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService,
-    private readonly commandersService: CommandersService
+    private readonly appService: AppService
   ) {}
 
   @Public()
@@ -18,11 +15,5 @@ export class AppController {
     return {
       message
     }
-  }
-
-  @Public()
-  @Post('/v1/register')
-  register(@Body() createCommanderDto: CreateCommanderDto) {
-    return this.commandersService.register(createCommanderDto);
   }
 }

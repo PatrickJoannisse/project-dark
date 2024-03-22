@@ -9,13 +9,6 @@ import { DataSource } from 'typeorm';
 // Modules
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ProductsModuleV1 } from './v1/products/products.module';
-import { LocationsModule } from './v1/locations/locations.module';
-import { CommandersModule } from './v1/commanders/commanders.module';
-import { CommandersService } from './v1/commanders/commanders.service';
-import { Commander } from './v1/commanders/entities/commander.entity';
-import { ShipsModule } from './v1/ships/ships.module';
-import { Ship } from './v1/ships/entities/ship.entity';
 
 @Module({
   imports: [
@@ -47,17 +40,12 @@ import { Ship } from './v1/ships/entities/ship.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Commander, Ship]),
-    ProductsModuleV1,
+    TypeOrmModule.forFeature([]),
     AuthModule,
-    UsersModule,
-    LocationsModule,
-    CommandersModule,
-    ShipsModule],
+    UsersModule],
   controllers: [AppController],
   providers: [
     AppService,
-    CommandersService
   ],
 })
 export class AppModule {
